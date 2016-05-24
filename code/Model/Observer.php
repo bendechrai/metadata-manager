@@ -19,7 +19,7 @@ class BenDechrai_MetadataManager_Model_Observer
 
             $title = trim($category->getMetaTitle());
             $description = trim($category->getMetaDescription());
-            if(true || $title=='' || $description=='') {
+            if($title=='' || $description=='') {
 
                 $autoTitle = '';
                 $autoDescription = '';
