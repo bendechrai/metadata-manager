@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BenDechrai_MetadataManager>
+            <version>0.0.1</version>
+        </BenDechrai_MetadataManager>
+    </modules>
+    <global>
+        <models>
+            <bendechrai_metadatamanager>
+                <class>BenDechrai_MetadataManager_Model</class>
+            </bendechrai_metadatamanager>
+        </models>
+        <helpers>
+            <bendechrai_metadatamanager>
+                <class>BenDechrai_MetadataManager_Helper</class>
+            </bendechrai_metadatamanager>
+        </helpers>
+    </global>
+    <frontend>
+        <events>
+            <controller_action_layout_generate_blocks_after>
+                <observers>
+                    <bendechrai_metadatamanager>
+                        <class>BenDechrai_MetadataManager_Model_Observer</class>
+                        <method>controller_action_layout_generate_blocks_after</method>
+                    </bendechrai_metadatamanager>
+                </observers>
+            </controller_action_layout_generate_blocks_after>
+        </events>
+    </frontend>
+</config>

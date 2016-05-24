@@ -1,0 +1,2 @@
+code                   app/code/community/BenDechrai/MetadataManager/
+module.xml             app/etc/modules/BenDechrai_MetadataManager.xml
