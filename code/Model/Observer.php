@@ -5,9 +5,38 @@ class BenDechrai_MetadataManager_Model_Observer
     public function controller_action_layout_generate_blocks_after(Varien_Event_Observer $observer)
     {
         switch($observer->getEvent()->getAction()->getRequest()->getControllerName()) {
+            case 'product':
+                $this->_process_product($observer);
+                break;
             case 'category':
                 $this->_process_category($observer);
                 break;
+        }
+        return $this;
+    }
+
+    private function _process_product(Varien_Event_Observer $observer)
+    {
+        if (Mage::registry('current_product')) {
+            $product = Mage::registry('current_product');
+
+            $description = ''; //trim($product->getMetaDescription());
+            $keywords = ''; //trim($product->getMetaKeywords());
+            if($description=='' || $keywords=='') {
+
+                $autoDescription = '';
+                $autoDescription = $product->getDescription() . ' ' . $product->getShortDescription();
+
+                $autoKeywords = '';
+                $autoKeywords .= preg_replace("#[\r\n]+#", ', ', $product->getEnhanceddataOemnumbersFilt());
+                $autoKeywords .= ', ' . $product->getAttributeText('brand');
+                $autoKeywords .= ', ' . $product->getName();
+
+            }
+
+            if($description == '') $observer->getLayout()->getBlock('head')->setDescription($autoDescription);
+            if($keywords == '') $observer->getLayout()->getBlock('head')->setKeywords($autoKeywords);
+
         }
         return $this;
     }
