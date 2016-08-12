@@ -48,10 +48,12 @@ class BenDechrai_MetadataManager_Model_Observer
 
             $title = trim($category->getMetaTitle());
             $description = trim($category->getMetaDescription());
-            if($title=='' || $description=='') {
+            $keywords = trim($category->getMetaKeywords());
+            if($title=='' || $description=='' || $keywords=='') {
 
                 $autoTitle = '';
                 $autoDescription = '';
+                $autoKeywords = '';
 
                 $categoryGroups = $this->getCategoryGroups();
                 $categoryData = array(
@@ -74,19 +76,23 @@ class BenDechrai_MetadataManager_Model_Observer
                 if(!is_null($categoryData['Make'])) {
                   $autoTitle .= $categoryData['Make'];
                   $autoDescription .= $categoryData['Make'];
+                  $autoKeywords .= $categoryData['Make'] . ', ';
                 }
 
                 if(!is_null($categoryData['Model'])) {
                   $autoTitle .= ' ' . $categoryData['Model'];
                   $autoDescription .= ' ' . $categoryData['Model'];
+                  $autoKeywords .= $categoryData['Model'] . ', ';
                 }
 
                 if(!is_null($categoryData['Category'])) {
 
                   if(!is_null($categoryData['Sub-Category'])) {
                     $autoTitle .= ' ' . $categoryData['Sub-Category'];
+                    $autoKeywords .= $categoryData['Sub-Category'] . ', ';
                   } else {
                     $autoTitle .= ' ' . $categoryData['Category'];
+                    $autoKeywords .= $categoryData['Category'] . ', ';
                   }
 
                 }
@@ -99,9 +105,11 @@ class BenDechrai_MetadataManager_Model_Observer
 
                 $autoTitle = preg_replace('# +#', ' ', $autoTitle) . ' | Run Auto Parts';
                 $autoDescription = "After $autoDescription spare parts? Run Auto Parts is Australia's leader in Euro car parts with a massive online range and free delivery available across Australia";
+                $autoKeywords .= "car parts, auto parts, vehicle parts";
             }
             if($title == '') $observer->getLayout()->getBlock('head')->setTitle($autoTitle);
             if($description == '') $observer->getLayout()->getBlock('head')->setDescription($autoDescription);
+            if($keywords == '') $observer->getLayout()->getBlock('head')->setKeywords($autoKeywords);
 
         }
         return $this;
